@@ -24,7 +24,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import NavLink from '@/components/NavLink';
-import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeProvider } from '@/app/ThemeProvider';
 import { ModeToggle } from '@/components/ModeToggle';
 
 const inter = Inter({ subsets: ['latin'] });
