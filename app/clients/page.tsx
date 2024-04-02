@@ -26,6 +26,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Client, columns } from './columns';
 import { DataTable } from '@/components/ui/data-table';
 import { DataTablePagination } from '@/components/ui/DataTablePagination';
+import { Input } from '@/components/ui/input';
 async function getData(): Promise<Client[]> {
   // Fetch data from your API here.
   return [
@@ -36,6 +37,86 @@ async function getData(): Promise<Client[]> {
       email: 'm@example.com',
       company: 'Land Clearing Experts',
       phoneNumber: '770-432-1965',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
+    },
+    {
+      id: '728dfadfadf',
+      name: 'Steve Doe',
+      status: 'active',
+      email: 'steve@example.com',
+      company: 'Roofing Experts',
+      phoneNumber: '433-547-8637',
     },
     {
       id: '728dfadfadf',
