@@ -1,14 +1,12 @@
 import React from 'react';
-import Image from 'next/image';
-import { File, ListFilter, MoreHorizontal, PlusCircle } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+
+import { File, ListFilter, PlusCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -16,17 +14,24 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Client, columns } from './columns';
 import { DataTable } from '@/components/ui/data-table';
-import { DataTablePagination } from '@/components/ui/DataTablePagination';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
 async function getData(): Promise<Client[]> {
   // Fetch data from your API here.
   return [
@@ -37,14 +42,6 @@ async function getData(): Promise<Client[]> {
       email: 'm@example.com',
       company: 'Land Clearing Experts',
       phoneNumber: '770-432-1965',
-    },
-    {
-      id: '728dfadfadf',
-      name: 'Steve Doe',
-      status: 'active',
-      email: 'steve@example.com',
-      company: 'Roofing Experts',
-      phoneNumber: '433-547-8637',
     },
     {
       id: '728dfadfadf',
@@ -137,353 +134,93 @@ const Clients = async () => {
       <div className='flex items-center'>
         <h1 className='text-lg font-semibold md:text-2xl'>Clients</h1>
       </div>
-      <Tabs defaultValue='all'>
-        <div className='flex items-center'>
-          <TabsList>
-            <TabsTrigger value='all'>All</TabsTrigger>
-            <TabsTrigger value='active'>Active</TabsTrigger>
-            <TabsTrigger value='draft'>Draft</TabsTrigger>
-            <TabsTrigger value='archived' className='hidden sm:flex'>
-              Archived
-            </TabsTrigger>
-          </TabsList>
-          <div className='ml-auto flex items-center gap-2'>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant='outline' size='sm' className='h-8 gap-1'>
-                  <ListFilter className='h-3.5 w-3.5' />
-                  <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
-                    Filter
-                  </span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align='end'>
-                <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem checked>
-                  Active
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Button size='sm' variant='outline' className='h-8 gap-1'>
-              <File className='h-3.5 w-3.5' />
-              <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
-                Export
-              </span>
-            </Button>
-            <Button size='sm' className='h-8 gap-1'>
-              <PlusCircle className='h-3.5 w-3.5' />
-              <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
-                Add Client
-              </span>
-            </Button>
-          </div>
-        </div>
-        <TabsContent value='all'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Clients</CardTitle>
-              <CardDescription>
-                Manage your clients and view their information.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {/* <DataTablePagination table={} /> */}
-              <DataTable columns={columns} data={data} />
-              {/* <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Price
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Total Sales
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Created at
-                    </TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className='hidden sm:table-cell'>
-                      <Image
-                        alt='Product image'
-                        className='aspect-square rounded-md object-cover'
-                        height='64'
-                        src='/placeholder.svg'
-                        width='64'
-                      />
-                    </TableCell>
-                    <TableCell className='font-medium'>
-                      Laser Lemonade Machine
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant='outline'>Draft</Badge>
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      $499.99
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>25</TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      2023-07-12 10:42 AM
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup='true'
-                            size='icon'
-                            variant='ghost'
-                          >
-                            <MoreHorizontal className='h-4 w-4' />
-                            <span className='sr-only'>Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className='hidden sm:table-cell'>
-                      <Image
-                        alt='Product image'
-                        className='aspect-square rounded-md object-cover'
-                        height='64'
-                        src='/placeholder.svg'
-                        width='64'
-                      />
-                    </TableCell>
-                    <TableCell className='font-medium'>
-                      Hypernova Headphones
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant='outline'>Active</Badge>
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      $129.99
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>100</TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      2023-10-18 03:21 PM
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup='true'
-                            size='icon'
-                            variant='ghost'
-                          >
-                            <MoreHorizontal className='h-4 w-4' />
-                            <span className='sr-only'>Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className='hidden sm:table-cell'>
-                      <Image
-                        alt='Product image'
-                        className='aspect-square rounded-md object-cover'
-                        height='64'
-                        src='/placeholder.svg'
-                        width='64'
-                      />
-                    </TableCell>
-                    <TableCell className='font-medium'>
-                      AeroGlow Desk Lamp
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant='outline'>Active</Badge>
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      $39.99
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>50</TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      2023-11-29 08:15 AM
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup='true'
-                            size='icon'
-                            variant='ghost'
-                          >
-                            <MoreHorizontal className='h-4 w-4' />
-                            <span className='sr-only'>Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className='hidden sm:table-cell'>
-                      <Image
-                        alt='Product image'
-                        className='aspect-square rounded-md object-cover'
-                        height='64'
-                        src='/placeholder.svg'
-                        width='64'
-                      />
-                    </TableCell>
-                    <TableCell className='font-medium'>
-                      TechTonic Energy Drink
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant='secondary'>Draft</Badge>
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      $2.99
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>0</TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      2023-12-25 11:59 PM
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup='true'
-                            size='icon'
-                            variant='ghost'
-                          >
-                            <MoreHorizontal className='h-4 w-4' />
-                            <span className='sr-only'>Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className='hidden sm:table-cell'>
-                      <Image
-                        alt='Product image'
-                        className='aspect-square rounded-md object-cover'
-                        height='64'
-                        src='/placeholder.svg'
-                        width='64'
-                      />
-                    </TableCell>
-                    <TableCell className='font-medium'>
-                      Gamer Gear Pro Controller
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant='outline'>Active</Badge>
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      $59.99
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>75</TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      2024-01-01 12:00 AM
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup='true'
-                            size='icon'
-                            variant='ghost'
-                          >
-                            <MoreHorizontal className='h-4 w-4' />
-                            <span className='sr-only'>Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className='hidden sm:table-cell'>
-                      <Image
-                        alt='Product image'
-                        className='aspect-square rounded-md object-cover'
-                        height='64'
-                        src='/placeholder.svg'
-                        width='64'
-                      />
-                    </TableCell>
-                    <TableCell className='font-medium'>
-                      Luminous VR Headset
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant='outline'>Active</Badge>
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      $199.99
-                    </TableCell>
-                    <TableCell className='hidden md:table-cell'>30</TableCell>
-                    <TableCell className='hidden md:table-cell'>
-                      2024-02-14 02:14 PM
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup='true'
-                            size='icon'
-                            variant='ghost'
-                          >
-                            <MoreHorizontal className='h-4 w-4' />
-                            <span className='sr-only'>Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table> */}
-            </CardContent>
-            <CardFooter>
-              <div className='text-xs text-muted-foreground'>
-                Showing <strong>1-10</strong> of <strong>32</strong> products
+      <div className='flex items-center'>
+        <div className='ml-auto flex items-center gap-2'>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='outline' size='sm' className='h-8 gap-1'>
+                <ListFilter className='h-3.5 w-3.5' />
+                <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
+                  Filter
+                </span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem checked>
+                Active
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Button size='sm' variant='outline' className='h-8 gap-1'>
+            <File className='h-3.5 w-3.5' />
+            <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
+              Export
+            </span>
+          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button size='sm' className='h-8 gap-1'>
+                <PlusCircle className='h-3.5 w-3.5' />
+                <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
+                  Add Client
+                </span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className='sm:max-w-[425px]'>
+              <DialogHeader>
+                <DialogTitle>Add Client</DialogTitle>
+                <DialogDescription>
+                  Add client details here. Click save when you&apos;re done.
+                </DialogDescription>
+              </DialogHeader>
+              <div className='grid gap-4 py-4'>
+                <div className='grid grid-cols-4 items-center gap-4'>
+                  <Label htmlFor='name' className='text-right'>
+                    Name
+                  </Label>
+                  <Input id='name' className='col-span-3' type='text' />
+                </div>
+                <div className='grid grid-cols-4 items-center gap-4'>
+                  <Label htmlFor='email' className='text-right'>
+                    Email
+                  </Label>
+                  <Input id='email' className='col-span-3' type='email' />
+                </div>
+                <div className='grid grid-cols-4 items-center gap-4'>
+                  <Label htmlFor='phoneNumber' className='text-right'>
+                    Phone Number
+                  </Label>
+                  <Input id='phoneNumber' className='col-span-3' type='tel' />
+                </div>
+                <div className='grid grid-cols-4 items-center gap-4'>
+                  <Label htmlFor='company' className='text-right'>
+                    Company
+                  </Label>
+                  <Input id='company' type='text' className='col-span-3' />
+                </div>
+                <div className='grid grid-cols-4 items-center gap-4'>
+                  <Label htmlFor='status' className='text-right'>
+                    Status
+                  </Label>
+                  <Input id='status' type='text' className='col-span-3' />
+                </div>
               </div>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              <DialogFooter>
+                <Button type='submit'>Save changes</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
+      <Card>
+        <CardContent>
+          <DataTable columns={columns} data={data} />
+        </CardContent>
+      </Card>
       {data.length === 0 && (
         <div className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm'>
           <div className='flex flex-col items-center gap-1 text-center'>

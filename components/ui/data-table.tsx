@@ -21,9 +21,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Button } from './button';
 import React from 'react';
 import { Input } from './input';
+import { DataTablePagination } from './DataTablePagination';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -62,15 +62,25 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className='flex items-center lg:justify-end pb-4'>
-        <Input
-          placeholder='Filter clients...'
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('name')?.setFilterValue(event.target.value)
-          }
-          className='max-w-sm '
-        />
+      <div className='flex items-center justify-between space-y-1.5 py-6 '>
+        <div className='flex flex-col'>
+          <h3 className='text-2xl font-semibold leading-none tracking-tight'>
+            Clients
+          </h3>
+          <p className='text-sm text-muted-foreground'>
+            Manage your clients and view their information
+          </p>
+        </div>
+        <div className='flex items-center lg:justify-end '>
+          <Input
+            placeholder='Filter clients...'
+            value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('name')?.setFilterValue(event.target.value)
+            }
+            className='max-w-sm '
+          />
+        </div>
       </div>
       <div className='rounded-md border'>
         <Table>
@@ -123,22 +133,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className='flex items-center justify-end space-x-2 py-4'>
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+        <DataTablePagination table={table} />
       </div>
     </>
   );
